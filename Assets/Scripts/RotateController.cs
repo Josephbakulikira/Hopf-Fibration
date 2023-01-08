@@ -4,17 +4,28 @@ using UnityEngine;
 
 public class RotateController : MonoBehaviour
 {
-    [SerializeField]
-    private float rotation_speed = 10.0f;
+    public float rotation_speed = 0.1f;
+    private Quaternion default_rotation;
+    private void Start()
+    {
+        default_rotation = transform.rotation;
+    }
 
-    public Camera cam;
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            transform.rotation = default_rotation;
+        }
+    }
 
     private void OnMouseDrag()
     {
-        float x_rotation = Input.GetAxis("Mouse X") * rotation_speed;
-        float y_rotation = Input.GetAxis("Mouse Y") * rotation_speed;
+        float Xaxis_rotation = Input.GetAxis("Mouse X") * rotation_speed;
+        float Yaxis_rotation = Input.GetAxis("Mouse Y") * rotation_speed;
 
-        Vector3 right = Vector3.Cross(cam.transform.up, transform.position - cam.transform.position);
-        //Vector3 up = 
+        transform.Rotate(Vector3.down, Xaxis_rotation);
+        transform.Rotate(Vector3.right, Yaxis_rotation);
     }
+
 }
