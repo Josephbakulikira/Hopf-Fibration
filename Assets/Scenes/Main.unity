@@ -274,6 +274,7 @@ GameObject:
   m_Component:
   - component: {fileID: 379140689}
   - component: {fileID: 379140688}
+  - component: {fileID: 379140690}
   m_Layer: 0
   m_Name: Hopf
   m_TagString: Untagged
@@ -294,6 +295,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points: []
+  pref_line: {fileID: 5360301660063643845, guid: c55d4bc740847a6409cf835c8679f0e5,
+    type: 3}
+  pointPref_parent: {fileID: 1254588889}
+  fiber_subdivision: 1000
 --- !u!4 &379140689
 Transform:
   m_ObjectHideFlags: 0
@@ -309,6 +314,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &379140690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379140687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dace2f713ef8b9478f1e4d1cc257a10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoom_speed: 12
+  default_fov: 75
+  cam: {fileID: 635082022}
+  default_position: {x: 0, y: 0, z: -10}
 --- !u!1 &574617635
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,7 +466,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.11267352, g: 0.11288118, b: 0.11320752, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -685,6 +706,7 @@ GameObject:
   - component: {fileID: 1254588891}
   - component: {fileID: 1254588894}
   - component: {fileID: 1254588895}
+  - component: {fileID: 1254588896}
   m_Layer: 6
   m_Name: UnitShpere
   m_TagString: Untagged
@@ -807,6 +829,23 @@ MonoBehaviour:
   point_prefab: {fileID: 5128379320317651569, guid: 0a6693c342c2ab146900f1b99976ce7a,
     type: 3}
   hopf: {fileID: 379140688}
+--- !u!114 &1254588896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254588889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 956d8b2208b302949893dd3f954bdb4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hopf: {fileID: 379140688}
+  point_prefab: {fileID: 5128379320317651569, guid: 0a6693c342c2ab146900f1b99976ce7a,
+    type: 3}
+  sphere_radius: 1
+  mode_subdivisions: 20
 --- !u!1 &1419066583
 GameObject:
   m_ObjectHideFlags: 0

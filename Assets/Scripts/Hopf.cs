@@ -7,6 +7,8 @@ public class Hopf : MonoBehaviour
     public List<Vector3> points = new List<Vector3>();
     public GameObject pref_line;
 
+    public GameObject pointPref_parent;
+
 
     [SerializeField]
     private int fiber_subdivision = 20;
@@ -15,16 +17,13 @@ public class Hopf : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        
+
     }
-
-    
-
     List<Vector3> GetFiber(Vector3 point, int subdivision)
     {
         List<Vector3> fiber_points = new List<Vector3>();
@@ -34,7 +33,7 @@ public class Hopf : MonoBehaviour
 
         float angle = Mathf.Atan2(-point.x, point.z);
 
-        for (int i = 0; i < subdivision+1; i++)
+        for (int i = 0; i < subdivision + 1; i++)
         {
             float theta = 2 * Mathf.PI * i / subdivision;
             float phi = angle - theta;
@@ -47,6 +46,22 @@ public class Hopf : MonoBehaviour
 
             new_point *= t;
 
+            // Handle if it's Infinity (NaN) the north pole)
+            if (float.IsNaN(new_point.x))
+            {
+                new_point.x = 0;
+            }
+            if (float.IsNaN(new_point.y))
+            {
+                new_point.y = 0;
+            }
+            if (float.IsNaN(new_point.z))
+            {
+                new_point.z = 0;
+
+            }
+
+
             fiber_points.Add(new_point);
         }
 
@@ -55,14 +70,16 @@ public class Hopf : MonoBehaviour
 
     public void AddPoint(Vector3 new_point) {
         points.Add(new_point);
-        
+
         List<Vector3> fiber = GetFiber(new_point, fiber_subdivision);
+        
         GameObject new_fiber = Instantiate(pref_line, new_point, Quaternion.identity, transform);
         new_fiber.GetComponent<LineRenderer>().positionCount = fiber.Count;
         int counter = 0;
         // draw fiber
         foreach (Vector3 f_point in fiber)
         {
+            
             new_fiber.GetComponent<LineRenderer>().SetPosition(counter, f_point);
             counter += 1;
 
@@ -76,6 +93,21 @@ public class Hopf : MonoBehaviour
         if (points.Contains(p))
         {
             points.Remove(p);
+        }
+    }
+
+    public void ResetPoints()
+    {
+        points.Clear();
+        // Destroy all the lines in the scene
+        foreach (Transform line_child in transform)
+        {
+            GameObject.Destroy(line_child.gameObject);
+        }
+        // Destroy all the point pref in the scene
+        foreach (Transform point_pref in pointPref_parent.transform) 
+        {
+            GameObject.Destroy(point_pref.gameObject);
         }
     }
 }
