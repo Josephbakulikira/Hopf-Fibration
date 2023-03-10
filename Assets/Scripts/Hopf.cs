@@ -6,8 +6,10 @@ public class Hopf : MonoBehaviour
 {
     public List<Vector3> points = new List<Vector3>();
     public GameObject pref_line;
-
+    [Range(0, 1)]
+    public float color_offset = 0.1f;
     public GameObject pointPref_parent;
+    public bool UseHsvColor = false;
 
 
     [SerializeField]
@@ -58,9 +60,7 @@ public class Hopf : MonoBehaviour
             if (float.IsNaN(new_point.z))
             {
                 new_point.z = 0;
-
             }
-
 
             fiber_points.Add(new_point);
         }
@@ -70,22 +70,33 @@ public class Hopf : MonoBehaviour
 
     public void AddPoint(Vector3 new_point) {
         points.Add(new_point);
-
         List<Vector3> fiber = GetFiber(new_point, fiber_subdivision);
         
         GameObject new_fiber = Instantiate(pref_line, new_point, Quaternion.identity, transform);
-        new_fiber.GetComponent<LineRenderer>().positionCount = fiber.Count;
+        LineRenderer line_renderer = new_fiber.GetComponent<LineRenderer>();
+
+        line_renderer.positionCount = fiber.Count;
+
+        if (UseHsvColor)
+        {
+            Vector3 normalized_position = new_point.normalized;
+            float hue = ((normalized_position.x + normalized_position.y + normalized_position.z) / 3.0f) * color_offset;
+            Color start_color = Color.HSVToRGB(hue, 1, 1);
+            line_renderer.startColor = start_color;
+            line_renderer.endColor = start_color;
+        }
+
         int counter = 0;
         // draw fiber
         foreach (Vector3 f_point in fiber)
         {
             
-            new_fiber.GetComponent<LineRenderer>().SetPosition(counter, f_point);
+            line_renderer.SetPosition(counter, f_point);
             counter += 1;
 
         }
 
-        lines.Add(new_fiber.GetComponent<LineRenderer>());
+        lines.Add(line_renderer);
     }
 
     public void RemovePoint(Vector3 p)

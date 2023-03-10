@@ -28,4 +28,13 @@ public class RotateController : MonoBehaviour
         transform.Rotate(Vector3.right, Yaxis_rotation);
     }
 
+    public void RotateSphere(float x, float y)
+    {
+        float Xaxis_rotation = Input.GetAxis("Mouse X") * rotation_speed;
+        float Yaxis_rotation = Input.GetAxis("Mouse Y") * rotation_speed;
+
+        transform.Rotate(Vector3.down, Xaxis_rotation);
+        transform.Rotate(Vector3.right, Yaxis_rotation);
+    }
+
 }

@@ -7,7 +7,7 @@ public class CameraOrbit : MonoBehaviour
 {
     public float zoom_speed = 12;
     public float default_fov = 60;
-
+    public RotateController rotate_controller;
 
     [SerializeField]
     private Camera cam;
@@ -15,6 +15,7 @@ public class CameraOrbit : MonoBehaviour
     private Vector3 default_position;
     private Vector3 previous_pos;
     private Quaternion default_rotation;
+
 
     private void Start()
     {
@@ -29,7 +30,11 @@ public class CameraOrbit : MonoBehaviour
         }
         if (Input.GetMouseButton(0))
         {
-            
+            float Xaxis_rotation = Input.GetAxis("Mouse X");
+            float Yaxis_rotation = Input.GetAxis("Mouse Y");
+
+            rotate_controller.RotateSphere(Xaxis_rotation, Yaxis_rotation);
+
             Vector3 direction = previous_pos - cam.ScreenToViewportPoint(Input.mousePosition);
             cam.transform.position = new Vector3();
             cam.transform.Rotate(new Vector3(1, 0, 0), direction.y * 100);
@@ -52,6 +57,11 @@ public class CameraOrbit : MonoBehaviour
         cam.transform.rotation = rot;
         cam.transform.position = pos;
         cam.fieldOfView = fov_val;
+    }
+    
+    public void ResetCameraAndPos()
+    {
+        SetCameraPosAndRot(default_rotation, default_position, default_fov);
     }
     
     

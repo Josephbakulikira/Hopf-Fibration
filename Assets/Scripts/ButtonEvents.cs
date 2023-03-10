@@ -8,6 +8,7 @@ public class ButtonEvents : MonoBehaviour
     public GameObject on_image;
     public GameObject off_image;
 
+
     public void ToggleShowPanel()
     {
         if(sphere_panel.activeSelf != true)
@@ -24,4 +25,8 @@ public class ButtonEvents : MonoBehaviour
             off_image.SetActive(false);
         }
     }
+
+    
+
+    
 }
